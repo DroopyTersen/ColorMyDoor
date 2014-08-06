@@ -1,0 +1,25 @@
+{
+  "name": "droopy-static",
+  "version": "0.0.0",
+  "description": "Empty project template for a static (clientside only) website",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DroopyTersen/droopy-static"
+  },
+  "keywords": [
+    "droopy"
+  ],
+  "author": "Andrew Petersen",
+  "bugs": {
+    "url": "https://github.com/DroopyTersen/droopy-static/issues"
+  },
+  "homepage": "https://github.com/DroopyTersen/droopy-static",
+  "devDependencies": {
+    "connect-livereload": "~0.3.2",
+    "optimist": "~0.6.1",
+    "tiny-lr": "0.0.5",
+    "gulp-open": "~0.2.8",
+    "gulp": "~3.5.2",
+    "express": "~3.4.8"
+  }
+}

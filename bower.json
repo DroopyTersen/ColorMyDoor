@@ -1,0 +1,17 @@
+{
+  "name": "Static Site",
+  "version": "0.0.0",
+  "main": "index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "jquery": "~2.1.1",
+    "farbtastic": "~2.0.0-alpha.1"
+  }
+}

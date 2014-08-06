@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+	<title>Color My Door</title>
+  <!-- <link rel="stylesheet" type="text/css" href="bower/bootstrap/dist/css/bootstrap.min.css"> -->
+	<!-- <link rel="stylesheet" type="text/css" href="styles/styles.css"> -->
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #ccc;
+    }
+    #house, #door{
+      width: 96%;
+      position: fixed;
+      top:2%;
+      left:2%;
+      border-radius: 5px;
+      /*border:1px solid #aaa;*/
+      box-shadow: 1px 3px 5px #444;
+    }
+    .colorpicker {
+      position: fixed;
+      top:5%;
+      right:5%;
+      background: rgba(255,255,255,.7);
+      padding:30px;
+      border-radius: 5px;
+      border:1px solid #ccc;
+      box-shadow: 1px 3px 5px #444;
+    }
+    .colorpicker h3 {
+      margin:0 0 10px 0;
+      text-align: center;
+      font-weight: 100;
+    }
+    #doorcolor {
+     text-align: center;
+      margin-top: 20px; 
+    }
+    .colorpicker form {
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+  <img src='images/momsdoor.jpg' id='house'/>
+  <img src='images/momsdoorjustdoor.png' id='door'/>
+  <div class="colorpicker">
+    <h3>Pick a color</h3>
+    <div id="colorpicker1"></div>
+    <form><input type="text" id="doorcolor"/></form>
+  </div>
+  <script type="text/javascript" src="bower/jquery/dist/jquery.min.js"></script>
+  <script>
+  $.browser = $.browser || {};
+  $.browser.msie = $.browser.msie || false;
+  </script>
+  <script type="text/javascript" src="bower/farbtastic/src/farbtastic.js"></script>
+  <script src='scripts/colorizer.js'></script>
+  <script>
+    $(document).ready(function() {
+      var defaultColor = "#00ff00";
+      colorizer.getPixels();
+      $("#doorcolor").val(defaultColor).on("change", function(){
+        colorizer.changeColor($(this).val());
+      });
+      $('#colorpicker1').farbtastic({ callback: '#doorcolor', width: 200 });
+      //colorizer.changeColor(defaultColor);
+    })
+  </script>
+</body>
+</html>
