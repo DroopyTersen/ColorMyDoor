@@ -61,8 +61,8 @@
   <script>
     $(document).ready(function() {
       var defaultColor = "#20355d";
-      colorizer.getPixels();
       $("#doorcolor").val(defaultColor).on("change", function(){
+        colorizer.getPixels();
         colorizer.changeColor($(this).val());
       });
       $('#colorpicker1').farbtastic({ callback: '#doorcolor', width: 200 });
