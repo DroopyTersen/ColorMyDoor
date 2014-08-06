@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 droopy-static
 =============
 
@@ -25,3 +26,7 @@ Its all setup for bower, so you can easily do things like
 bower install --save bootstrap
 bower install --save jquery
 ```
+=======
+ColorMyDoor
+===========
+>>>>>>> 2c2cd8b6dae438b4c0f3a9adcf49d4e528016fed
