@@ -45,7 +45,7 @@
 </head>
 <body>
   <img src='images/momsdoor.jpg' id='house'/>
-  <img src='images/momsdoorjustdoor.png' id='door'/>
+  <img src='images/momsdoorjustdoor.png' id='door' style='display:none'/>
   <div class="colorpicker">
     <h3>Pick a color</h3>
     <div id="colorpicker1"></div>
@@ -62,10 +62,13 @@
     $(document).ready(function() {
       var defaultColor = "#20355d";
       $("#doorcolor").val(defaultColor).on("change", function(){
-        colorizer.getPixels();
         colorizer.changeColor($(this).val());
       });
-      $('#colorpicker1').farbtastic({ callback: '#doorcolor', width: 200 });
+      setTimeout(function(){
+        $("#door").show();
+        colorizer.getPixels();
+        $('#colorpicker1').farbtastic({ callback: '#doorcolor', width: 200 });
+      },700);
       //colorizer.changeColor(defaultColor);
     })
   </script>
