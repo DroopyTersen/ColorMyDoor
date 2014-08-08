@@ -5,11 +5,6 @@ var Colorizer = function(imgId) {
   self.ctx = self.canvas.getContext("2d");
   self.originalPixels = null;
   self.currentPixels = null;
-  self.imgElem.onload = function() {
-    self.getPixels();
-    self.ready.resolve();
-  };
-  self.ready = new $.Deferred();
 };
 
 Colorizer.prototype.getPixels = function() {

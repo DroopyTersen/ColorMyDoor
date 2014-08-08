@@ -62,7 +62,8 @@
     (function() {
       var defaultColor = "#20355d";
       colorizer = new Colorizer("door");
-      colorizer.ready.done(function() {
+      colorizer.imgElem.onload = function() {
+        colorizer.getPixels();
         colorizer.changeColor(defaultColor);
         $('#colorpicker1').farbtastic({ callback: '#doorcolor', width: 200 });
         $("#doorcolor")
@@ -71,7 +72,7 @@
           .on("change", function(){
           colorizer.changeColor($(this).val());
         });
-      });
+      };
     })();
   </script>
 </body>
