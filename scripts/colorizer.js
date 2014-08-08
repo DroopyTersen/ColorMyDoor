@@ -1,51 +1,52 @@
-var colorizer = (function() {
-  var door = document.getElementById("door");
-  var canvas = document.createElement("canvas");
-  var ctx = canvas.getContext("2d");
-  var originalPixels = null;
-  var currentPixels = null;
+var Colorizer = function(imgId) {
+  var self = this;
+  self.imgElem = document.getElementById(imgId);
+  self.canvas = document.createElement("canvas");
+  self.ctx = self.canvas.getContext("2d");
+  self.originalPixels = null;
+  self.currentPixels = null;
+  self.imgElem.onload = function() {
+    self.getPixels();
+    self.ready.resolve();
+  };
+  self.ready = new $.Deferred();
+};
 
-  function getPixels() {
-    var img = door;
-    canvas.width = img.width;
-    canvas.height = img.height;
+Colorizer.prototype.getPixels = function() {
+  var img = this.imgElem;
+  this.canvas.width = img.width;
+  this.canvas.height = img.height;
 
-    ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, img.width, img.height);
-    originalPixels = ctx.getImageData(0, 0, img.width, img.height);
-    currentPixels = ctx.getImageData(0, 0, img.width, img.height);
+  this.ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, img.width, img.height);
+  this.originalPixels = this.ctx.getImageData(0, 0, img.width, img.height);
+  this.currentPixels = this.ctx.getImageData(0, 0, img.width, img.height);
 
-    img.onload = null;
+  img.onload = null;
+};
+
+Colorizer.prototype.hexToRgb = function(hex) {
+  var long = parseInt(hex.replace(/^#/, ""), 16);
+  return {
+    R: (long >>> 16) & 0xff,
+    G: (long >>> 8) & 0xff,
+    B: long & 0xff
+  };
+};
+
+Colorizer.prototype.changeColor = function(hex) {
+  if (!this.originalPixels) return; // Check if image has loaded
+  var newColor = this.hexToRgb(hex);
+
+  for (var I = 0, L = this.originalPixels.data.length; I < L; I += 4) {
+    if (this.currentPixels.data[I + 3] > 0) // If it's not a transparent pixel
+    {
+      this.currentPixels.data[I] = this.originalPixels.data[I] / 255 * newColor.R;
+      this.currentPixels.data[I + 1] = this.originalPixels.data[I + 1] / 255 * newColor.G;
+      this.currentPixels.data[I + 2] = this.originalPixels.data[I + 2] / 255 * newColor.B;
+    }
   }
 
-  var hexToRgb = function(hex) {
-    var long = parseInt(hex.replace(/^#/, ""), 16);
-    return {
-      R: (long >>> 16) & 0xff,
-      G: (long >>> 8) & 0xff,
-      B: long & 0xff
-    };
-  };
+  this.ctx.putImageData(this.currentPixels, 0, 0);
+  this.imgElem.src = this.canvas.toDataURL("image/png");
+};
 
-  var changeColor = function(hex) {
-    if (!originalPixels) return; // Check if image has loaded
-    var newColor = hexToRgb(hex);
-
-    for (var I = 0, L = originalPixels.data.length; I < L; I += 4) {
-      if (currentPixels.data[I + 3] > 0) // If it's not a transparent pixel
-      {
-        currentPixels.data[I] = originalPixels.data[I] / 255 * newColor.R;
-        currentPixels.data[I + 1] = originalPixels.data[I + 1] / 255 * newColor.G;
-        currentPixels.data[I + 2] = originalPixels.data[I + 2] / 255 * newColor.B;
-      }
-    }
-
-    ctx.putImageData(currentPixels, 0, 0);
-    door.src = canvas.toDataURL("image/png");
-  };
-
-  return {
-    hexToRgb: hexToRgb,
-    changeColor: changeColor,
-    getPixels: getPixels
-  };
-})();
