@@ -29,12 +29,12 @@ Colorizer.prototype.hexToRgb = function(hex) {
 };
 
 Colorizer.prototype.changeColor = function(hex) {
-  if (!this.originalPixels) return; // Check if image has loaded
+  if (!this.originalPixels) return; // Need to make sure to run getPixels first
   var newColor = this.hexToRgb(hex);
   var dataLength = this.originalPixels.data.length;
 
   for (var i = 0; i < dataLength; i += 4) {
-    if (this.currentPixels.data[i + 3] > 0) // If it's not a transparent pixel
+    if (this.currentPixels.data[i + 3] > 0) //skip transparent parts
     {
       this.currentPixels.data[i] = this.originalPixels.data[i] / 255 * newColor.R;
       this.currentPixels.data[i + 1] = this.originalPixels.data[i + 1] / 255 * newColor.G;
